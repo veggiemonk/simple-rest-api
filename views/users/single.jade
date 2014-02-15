@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../../stylesheets/style.css')
+  body
+    h1 #{title}
+
+    div
+      form.navbar-form(role="search")
+        div.form-group
+          a(href="/users")
+            button(type="button",class="btn btn-default")
+              span(class="glyphicon glyphicon-arrow-left")  List
+          a(href="/users/new")
+            button(type="button",class="btn btn-default")
+              span(class="glyphicon glyphicon-plus")  user
+
+    table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive
+      thead
+        tr
+          th.align-center Edit
+          th Name
+          th.align-center Credit
+      tbody
+        tr
+          td.align-center: a(href="/users/#{results[0].id_user}/edit") 
+                i.glyphicon.glyphicon-edit
+          td: a(href="/users/#{results[0].id_user}/") #{results[0].name}
+          td.align-center #{results[0].credit}
+    
+    form(method="POST" , action="/users/#{results[0].id_user}")
+      input(type="hidden", name="_method", value="DELETE")
+      button(type="submit") Delete User
+
+    hr
+    //- h2 Movies rented
+
+    
+    //- table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive
+    //-   thead
+    //-     tr
+    //-       th.align-center Name
+    //-       th.align-center Category
+    //-   tbody
+    //-     each result in results
+    //-       tr
+    //-         td.align-center: a(href="/movies/#{result.id_movie}")  #{result.MOVIE}
+    //-         td.align-center #{result.category}
+
+    

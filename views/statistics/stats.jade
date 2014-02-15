@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../stylesheets/style.css')
+  body
+    h1 #{title}
+    hr
+    section        
+      div
+        form.navbar-form
+          div.form-group
+            a(href="/")
+              button(type="button",class="btn btn-default")              
+                span(class="glyphicon glyphicon-arrow-left")  Home
+
+    p
+      a(href='/stats/income') Show Video store income
+    p
+      a(href='/stats/topmovie') Show TOP 50 movies
+    p
+      a(href='/stats/topuser') Show TOP 10 users
+    p
+      a(href='/stats/topcat') Show TOP 3 categories
+    p
+      a(href='/stats/10plus') Show All movies hired more than 10 times
+    p
+      a(href='/stats/hiredmovie') Show hired movies

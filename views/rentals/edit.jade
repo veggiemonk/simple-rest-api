@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../../stylesheets/style.css')
+  body
+    
+    h1 Order #{rental.id} information:
+
+    form.navbar-form
+      button(type="button",class="btn btn-default")
+        a(href="/rentals")
+          span(class="glyphicon glyphicon-arrow-left")  List
+        
+    form.navbar-form(method="POST" , action="/rentals/#{rental.id}" )
+      input(type="hidden", name="_method", value="PUT")
+      div.row
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Movie
+            input#name.form-control(type="text" , name="name", disabled,value="#{rental.MOVIE}")
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Customer
+            input#name.form-control(type="text" , name="name",disabled, value="#{rental.USER}")
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Cost
+            input#credit.form-control(type="number", name="cost", value="#{rental.cost}")
+        div.col-lg-3
+          div.input-group
+            button(type="submit",class="btn btn-default")
+              span(class="glyphicon glyphicon-save")  Save

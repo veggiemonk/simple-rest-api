@@ -1,0 +1,43 @@
+extends layout.rental
+
+block content
+
+  h1 #{title}
+  section        
+    div
+      form.navbar-form(role="search")
+        div.form-group
+          a(href="/")
+            button(type="button",class="btn btn-default")            
+              span(class="glyphicon glyphicon-arrow-left")  Home
+          a(href="/rentals/new")
+            button(type="button",class="btn btn-default")            
+              span(class="glyphicon glyphicon-plus")  Hire Movie
+        form(method="GET", action="/rentals/")
+          input(class="form-control",name="search",type="text",placeholder="Search movie")
+          button(type="submit",class="btn btn-default") 
+            i.glyphicon.glyphicon-search   Search
+
+    table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive
+      thead
+        tr
+          th.align-center Edit
+          th Movie
+          th Customer
+          th.align-center Cost
+          th.align-center Date
+      tbody
+        each rental in rentals
+          tr
+            td.align-center: a(href="/rentals/#{rental.id}/edit") 
+              i.glyphicon.glyphicon-edit
+            td: a(href="/movies/#{rental.id_movie}/") #{rental.MOVIE}
+            td: a(href="/users/#{rental.id_user}/") #{rental.USER}
+            td.align-center #{rental.cost}
+            td.align-center #{rental.date}
+
+
+
+
+  //script(src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+  //script(src="../javascripts/main.js")

@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../stylesheets/style.css')
+  body
+    h1 #{title}
+    hr 
+    section        
+      div
+        form.navbar-form
+          div.form-group
+            a(href="/stats")
+              button(type="button",class="btn btn-default")              
+                span(class="glyphicon glyphicon-arrow-left")  Statistics
+
+    table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive 
+      thead
+        tr 
+          th NAME
+          th HIRED
+      tbody
+        each hire, i in hired
+          tr(class=(i % 2 == 0) ? 'odd' : 'even')
+            td: a(href="/movies/#{hire.ID}") #{hire.NAME}
+            td #{hire.HIRED} times
+

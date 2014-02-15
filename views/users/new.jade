@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../../stylesheets/style.css')
+  body
+
+    h1 Add New User:
+
+    form.navbar-form
+      a(href="/users")
+        button(type="button",class="btn btn-default")        
+          span(class="glyphicon glyphicon-arrow-left")  List
+        
+    form.navbar-form(method="POST" , action="/users")
+      div.row
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon User Name
+            input#username.form-control(type="text" , name="name")
+        div.col-lg-3
+          div.input-group
+            button(type="submit",class="btn btn-default")
+              span(class="glyphicon glyphicon-save")  Save
+
+
+
+//- h1 Add new User
+
+//-   form(method="POST" , action="/users")
+//-     p User Name:
+//-       input#username(type="text" , name="name")
+//-     p: button(type="submit") Create User

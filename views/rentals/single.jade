@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../../stylesheets/style.css')
+  body
+    h1 #{title}
+
+    div
+      form.navbar-form(role="search")
+        div.form-group
+          a(href="/rentals")
+            button(type="button",class="btn btn-default")
+              span(class="glyphicon glyphicon-arrow-left")  List
+          a(href="/rentals/new")
+            button(type="button",class="btn btn-default")
+              span(class="glyphicon glyphicon-plus")  rental
+
+    table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive
+      thead
+        tr
+          th.align-center Edit
+          th Movie
+          th Customer
+          th.align-center Cost
+      tbody
+        tr
+          td.align-center: a(href="/rentals/#{results[0].id}/edit") 
+                i.glyphicon.glyphicon-edit
+          td: a(href="/movies/#{results[0].id_movie}/") #{results[0].MOVIE}
+          td: a(href="/users/#{results[0].id_user}/") #{results[0].USER}
+          td.align-center #{results[0].cost}
+    
+    //- form(method="POST" , action="/rentals/#{results[0].id_rental}")
+    //-   input(type="hidden", name="_method", value="DELETE")
+    //-   button(type="submit") Delete User
+
+    hr
+    

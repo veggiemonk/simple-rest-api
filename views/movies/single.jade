@@ -1,0 +1,57 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../../stylesheets/style.css')
+  body
+    h1 #{title}
+
+    div
+      form.navbar-form(role="search")
+        div.form-group
+          a(href="/movies")
+            button(type="button",class="btn btn-default")
+              span(class="glyphicon glyphicon-arrow-left")  List
+          a(href="/movies/new")              
+            button(type="button",class="btn btn-default")
+              span(class="glyphicon glyphicon-plus")  Movie
+
+    table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive
+      thead
+        tr
+          th.align-center Edit
+          th Name
+          th.align-center Category
+          th.align-center Price
+      tbody
+        tr
+          td.align-center: a(href="/movies/#{results[0].id_movie}/edit") 
+                i.glyphicon.glyphicon-edit
+          td: a(href="/movies/#{results[0].id_movie}/") #{results[0].name}
+          td.align-center #{results[0].category}
+          td.align-center #{results[0].price}
+    
+    form(method="POST" , action="/movies/#{results[0].id_movie}")
+      input(type="hidden", name="_method", value="DELETE")
+      button(type="submit") Delete Movie
+
+
+    hr
+    //- h2 These customers rented this movie
+
+    //- script 
+    //-   //if(results)
+    //- table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive
+    //-   thead
+    //-     tr
+    //-       th.align-center Name
+    //-   tbody
+    //-     each result in results
+    //-       tr
+    //-         td.align-center: a(href="/users/#{result.id_user}")  #{result.USER}
+            
+
+    
+
+    
+

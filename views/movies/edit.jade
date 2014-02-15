@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../../stylesheets/style.css')
+  body
+
+    h1 Update #{movie.name}'s information:
+
+    form.navbar-form
+      a(href="/movies")
+        button(type="button",class="btn btn-default")
+          span(class="glyphicon glyphicon-arrow-left")  List
+        
+    form.navbar-form(method="POST" , action="/movies/#{movie.id_movie}")
+      input(type="hidden", name="_method", value="PUT")
+      div.row
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Name
+            input#name.form-control(type="text" , name="name", value="#{movie.name}")
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Category
+            input#category.form-control(type="number", name="category", value="#{movie.category}")
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Price:
+            input#price.form-control(type="number", name="price", value="#{movie.price}")
+        div.col-lg-3
+          div.input-group
+            button(type="submit",class="btn btn-default")
+              span(class="glyphicon glyphicon-save")  Save

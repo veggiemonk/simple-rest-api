@@ -1,0 +1,42 @@
+extends layout.user
+
+block content
+
+  h1 #{title}
+  section        
+    div
+      form.navbar-form(role="search")
+        div.form-group
+          a(href="/")
+            button(type="button",class="btn btn-default")            
+              span(class="glyphicon glyphicon-arrow-left")  Home
+          a(href="/users/new")
+            button(type="button",class="btn btn-default")            
+              span(class="glyphicon glyphicon-plus")  User
+        //- div.form-group.innersearch
+        //-   input#search(type="text",class="form-control",placeholder="Search User")
+        //-   i.glyphicon.glyphicon-search
+        form(method="GET", action="/users/")
+          input(class="form-control",name="search",type="text",placeholder="Search User")
+          button(type="submit",class="btn btn-default") 
+            i.glyphicon.glyphicon-search   Search
+      div#results
+    
+    table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive
+      thead
+        tr
+          th.align-center Edit
+          th Name
+          th.align-center Credit
+      tbody
+        each user in users
+          tr
+            td.align-center: a(href="/users/#{user.id_user}/edit") 
+              i.glyphicon.glyphicon-edit
+            td: a(href="/users/#{user.id_user}/") #{user.name}
+            td.align-center #{user.credit}
+
+
+  //- script(src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+  //- script(src="../javascripts/jquery.min.js")
+  //- script(src="../javascripts/main.js")

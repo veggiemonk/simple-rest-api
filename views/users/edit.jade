@@ -1,0 +1,42 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../../stylesheets/style.css')
+  body
+    
+    h1 Update #{user.name}'s information:
+
+    form.navbar-form
+      button(type="button",class="btn btn-default")
+        a(href="/users")
+          span(class="glyphicon glyphicon-arrow-left")  List
+        
+    form.navbar-form(method="POST" , action="/users/#{user.id_user}")
+      input(type="hidden", name="_method", value="PUT")
+      div.row
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Name
+            input#name.form-control(type="text" , name="name", value="#{user.name}")
+        div.col-lg-3
+          div.input-group
+            span.input-group-addon Credit
+            input#credit.form-control(type="number", name="credit", value="#{user.credit}")
+        div.col-lg-3
+          div.input-group
+            button(type="submit",class="btn btn-default")
+              span(class="glyphicon glyphicon-save")  Save
+
+
+//- h1 Update #{user.name}'s profile:
+
+
+//- form(method="POST" , action="/users/#{user.id_user}")
+//-   input(type="hidden", name="_method", value="PUT")
+//-   p Name:
+//-     input#name(type="text" , name="name", value="#{user.name}")
+//-   p Credit:
+//-     input#credit(type="number", name="credit", value="#{user.credit}")
+//-   p 
+//-     button(type="submit") Save User

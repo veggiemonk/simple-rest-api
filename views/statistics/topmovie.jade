@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='../stylesheets/style.css')
+  body
+    h1 #{title}
+    hr 
+    section        
+      div
+        form.navbar-form
+          div.form-group
+            a(href="/stats")
+              button(type="button",class="btn btn-default")            
+                span(class="glyphicon glyphicon-arrow-left")  Statistics
+
+    table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive 
+      thead
+        tr 
+          th Name
+          th Total
+      tbody
+        each movie, i in movies
+          tr(class=(i % 2 == 0) ? 'odd' : 'even')
+            td: a(href="/movies/#{movie.ID}") #{movie.NAME}
+            td #{movie.TOTAL}
+          
+        
