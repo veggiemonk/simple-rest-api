@@ -43,10 +43,11 @@ if ('production' == app.settings.env) {
 }
 
 
-
+// Basic protection!
 var auth = express.basicAuth(function(user, pass) {     
      return (user == "root" && pass == "root") ? true : false;
 });
+
 
 
 /***************/
@@ -84,18 +85,25 @@ app.param('userId', function(req, res, next){
 
 //List of users
 app.get('/users',auth, user.list);
+app.get('/api/users', auth, user.list); //json
 //Create new user
 app.get('/users/new',auth, user.add);
 //Add user to db
 app.post('/users',auth, user.new);
+app.post('/api/users/',auth, user.apinew);//json
 //Show single user
 app.get('/users/:userId',auth, user.getuser);
+app.get('/api/users/:userId',auth, user.apigetuser);//json
 //Edit user info
 app.get('/users/:userId/edit',auth, user.edit);
 //Update user changes to db
 app.put('/users/:userId',auth, user.update);
+app.put('/api/users/:userId',auth, user.apiupdate);//json
 //Delete user
 app.delete('/users/:userId',auth, user.delete);
+app.delete('/api/users/:userId',auth, user.apidelete);//json
+//Search User for JSON API
+app.get('/api/users/', auth, user.search);
 
 
 /************************************ MOVIE ****/
