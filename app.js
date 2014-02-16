@@ -30,7 +30,7 @@ app.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
-if ('development' == app.get('env')) {
+if ('dev' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
@@ -44,9 +44,10 @@ if ('production' == app.settings.env) {
 
 
 
-// FOR FUTURE
-// AUTH
-//app.all('*', requireAuthentication, loadUser);
+var auth = express.basicAuth(function(user, pass) {     
+     return (user == "root" && pass == "root") ? true : false;
+});
+
 
 /***************/
 // var allowCrossDomain = function(req, res, next) {
@@ -62,6 +63,10 @@ if ('production' == app.settings.env) {
 /** ROUTES **/
 /************/
 
+/***** ROOT *****/
+app.get('/', auth, routes.index);
+
+
 /************************************ USER ****/
 
 // precondition function:
@@ -76,21 +81,21 @@ app.param('userId', function(req, res, next){
   }
 });
 
-app.get('/', routes.index);
+
 //List of users
-app.get('/users', user.list);
+app.get('/users',auth, user.list);
 //Create new user
-app.get('/users/new', user.add);
+app.get('/users/new',auth, user.add);
 //Add user to db
-app.post('/users', user.new);
+app.post('/users',auth, user.new);
 //Show single user
-app.get('/users/:userId', user.getuser);
+app.get('/users/:userId',auth, user.getuser);
 //Edit user info
-app.get('/users/:userId/edit', user.edit);
+app.get('/users/:userId/edit',auth, user.edit);
 //Update user changes to db
-app.put('/users/:userId', user.update);
+app.put('/users/:userId',auth, user.update);
 //Delete user
-app.delete('/users/:userId', user.delete);
+app.delete('/users/:userId',auth, user.delete);
 
 
 /************************************ MOVIE ****/
@@ -107,19 +112,19 @@ app.param('movieId', function(req, res, next){
 });
 
 //List of movies
-app.get('/movies', movie.list);
+app.get('/movies',auth, movie.list);
 //Create new movie
-app.get('/movies/new', movie.add);
+app.get('/movies/new',auth, movie.add);
 //Add movie to db
-app.post('/movies', movie.new);
+app.post('/movies', auth,movie.new);
 //Show single movie
-app.get('/movies/:movieId', movie.getmovie);
+app.get('/movies/:movieId', auth,movie.getmovie);
 //Edit movie info
-app.get('/movies/:movieId/edit', movie.edit);
+app.get('/movies/:movieId/edit',auth, movie.edit);
 //Update movie changes to db
-app.put('/movies/:movieId', movie.update);
+app.put('/movies/:movieId',auth, movie.update);
 //Delete movie
-app.delete('/movies/:movieId', movie.delete);
+app.delete('/movies/:movieId',auth, movie.delete);
 
 
 /************************************ RENTAL ****/
@@ -135,29 +140,29 @@ app.param('rentalId', function(req, res, next){
   }
 });
 //List of rentals
-app.get('/rentals', rental.list);
+app.get('/rentals',auth, rental.list);
 //Hire a movie
-app.get('/rentals/new', rental.add);
+app.get('/rentals/new',auth, rental.add);
 //Add new hire to db
-app.post('/rentals', rental.new);
+app.post('/rentals',auth, rental.new);
 //Show single rental --> no need at the moment!
-app.get('/rentals/:rentalId', rental.getrental);
+app.get('/rentals/:rentalId',auth, rental.getrental);
 //Edit rental info --> no need at the moment!
-app.get('/rentals/:rentalId/edit', rental.edit);
+app.get('/rentals/:rentalId/edit',auth, rental.edit);
 //Update rental changes to db 
-app.put('/rentals/:rentalId', rental.update);
+app.put('/rentals/:rentalId',auth, rental.update);
 //Delete rental --> No need!!
 //app.delete('/rentals/:rentalId', rental.delete);
 
 /************************************ STATISTICS ****/
 //List of statistics
-app.get('/stats', stats.list);
-app.get('/stats/income', stats.income);
-app.get('/stats/topmovie', stats.topmovie);
-app.get('/stats/topuser', stats.topuser);
-app.get('/stats/topcat', stats.topcat);
-app.get('/stats/10plus', stats.tenplus);
-app.get('/stats/hiredmovie', stats.hiredmovie);
+app.get('/stats',auth, stats.list);
+app.get('/stats/income',auth, stats.income);
+app.get('/stats/topmovie',auth, stats.topmovie);
+app.get('/stats/topuser',auth, stats.topuser);
+app.get('/stats/topcat',auth, stats.topcat);
+app.get('/stats/10plus',auth, stats.tenplus);
+app.get('/stats/hiredmovie',auth, stats.hiredmovie);
 
 
 
