@@ -19,12 +19,17 @@ exports.list = function(req, res){
                 FROM RENTALS r, USERS u, MOVIES m \
                 WHERE r.id_user = u.id_user \
                 AND r.id_movie = m.id_movie ";                
-  if (q_search) q_sql += " AND m.name LIKE '%"+ q_search +"%' ORDER BY r.date DESC; " ;  
-  else q_sql += " ORDER BY r.date DESC;";
+  if (q_search) q_sql += " AND m.name LIKE '%"+ q_search +"%' ; " ;  
+  q_sql += " ORDER BY r.date DESC;";
   //TODO Clean up sql query
-  cnx.query(q_sql, function(err, rows) {
-    if (err) res.json(err);
-    res.render('rentals/list', {title: "All rentals", rentals: rows});
+  cnx.query(q_sql, function(err, result) {
+    if (err) res.status('404').json(err);
+    else {
+      if(result){
+        if (req.path.indexOf("api") !== -1 ) res.json(result);
+        else res.render('rentals/list', {title: "All rentals", rentals: result});
+      }
+    }
   });
 };
 
@@ -76,6 +81,8 @@ exports.new = function (req, res){
     }
   });
 };
+
+
 
 exports.edit = function (req, res){
   var id = req.rentalId;

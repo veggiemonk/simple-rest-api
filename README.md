@@ -16,9 +16,15 @@ npm start
 ```
 # Testing with cURL
 
+## USERS
+
 ### Get list of all users
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/users/
+
+### Search users by name
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/search/users/ -d '{"name":"vincent"}'
 
 ### To get a single user with id = 1
   
@@ -35,3 +41,75 @@ npm start
 ### To delete a user with id = 1009
 
     $ curl -i -X DELETE -H "Content-Type: application/json" --user root:root http://localhost:3000/api/users/1009
+
+
+## MOVIES
+
+### Get list of all movies
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/
+
+### Search movies by name
+
+    $ curl -i -X POST -H "Content-Type: application/json" --user root:root http://localhost:3000/api/search/movies/ -d '{"name":"movie"}'
+
+### To get a single movie with id = 1
+  
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/1
+
+### To create new movie with name = "MOVIE 1", category = "5" and price = "20"
+
+    $ curl -i -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/ --data '{"name":"Movie 1", "category":"5", "price":"20"}'
+
+### To update movie with id = 1
+
+    $ curl -i -X PUT --data '{"name":"BRAKUS2", "category":"4", "price":"20"}' -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/1
+
+### To delete a movie with id = 1009
+
+    $ curl -i -X DELETE -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/1009
+
+
+## RENTALS
+
+### Get list of all rentals
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/rentals
+
+
+
+
+
+## STATISTICS
+
+### Income of the Day
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/income/d
+
+### Income of the Month
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/income/m
+
+### Income of the Year
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/income/y
+
+### Top 50 movies
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/topmovie
+
+### Top 10 users
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/topuser
+
+### Top 3 categories
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/topcat
+
+### Movies Hired more than 10 times
+
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/10plus
+
+### All Hired Movies
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/hiredmovie
+

@@ -37,12 +37,62 @@ exports.list = function(req, res){
   });
 };
 
+/**
+* HTTP POST /api/search/users
+* Body Parameter: :name = (partial) name of the users
+* Returns: The list of users containing the parameter in JSON
+*/
+exports.search = function(req, res){
+  //var data = [];
+  var q_sql = "SELECT * FROM USERS WHERE NAME LIKE '%"+ req.body.name +"%' ; ";
+  var query = cnx.query(q_sql, function(err, result) {
+    if (err) res.status('404').json(err);
+    else res.json(result);
+    });
+}
+
+exports.add = function (req, res){
+  res.render('users/new');
+};
+
+exports.new = function (req, res){
+  var name = req.body.name; // TODO: security "Careful SQL injection!!!"
+  cnx.query('INSERT INTO `USERS` (name) VALUES (?);', [name], function(err, result) {
+    if (err) res.status('404').json(err);
+    else{
+      if (result) res.redirect('/users/'+ result.insertId + '/edit');
+      else res.status('500').redirect('/users');
+    }
+  });
+};
+
+/**
+* HTTP POST /api/users/
+* Body Parameters: "name" and "credit" of the user to be created
+* Returns: 200 HTTP code: "Created user :name with id = :id and credit = :credit"
+* Error: 500 HTTP code with result from query
+*/
+exports.apinew = function (req, res){
+  var data = [req.body.name, req.body.credit]; // TODO: security "Careful SQL injection!!!"
+  //console.log(data);
+  var query = cnx.query('INSERT INTO `USERS` (name, credit) VALUES (?,?);', data, function(err, result) {
+    console.log(query.sql);
+    if (err) res.status('404').json(err);
+    else{
+      if (result) res.json('Created user '+data[0]+' \
+                            with id = '+ result.insertId +' \
+                            and credit = '+ data[1]);
+      else res.status('500').send("Error: DB returned = " + result);
+    }
+  });
+};
+
 exports.getuser = function (req, res){
   var id = req.userId;
   var q_sql = "SELECT * FROM USERS WHERE id_user = ?;";
-// list of movies rented by the users
-// TODO put it in a partials !
-/*  var q_sql = " SELECT r.id_movie, m.name AS MOVIE, \
+  // list of movies rented by the users
+  // TODO put it in a partials !
+  /*  var q_sql = " SELECT r.id_movie, m.name AS MOVIE, \
                    m.category, u.id_user, u.name, u.credit \
                 FROM users u, rentals r, movies m \
                 WHERE r.id_movie = m.id_movie \
@@ -62,7 +112,7 @@ exports.getuser = function (req, res){
 
 /**
 * HTTP GET /api/users/:id_user
-* Parameter: :id_user is the unique identifier of the user you want to retrieve
+* Parameter: :id_user is the unique identifier of the user to retrieve
 * Returns: the user information with the specified :id_user in a JSON format
 * Error: - Error from the database in JSON format
 *        - 404 HTTP code if user not exist
@@ -80,39 +130,6 @@ exports.apigetuser = function (req, res){
   });
 };
 
-exports.add = function (req, res){
-  res.render('users/new');
-};
-
-exports.new = function (req, res){
-  var name = req.body.name; // TODO: security "Careful SQL injection!!!"
-  cnx.query('INSERT INTO `USERS` (name) VALUES (?);', [name], function(err, result) {
-    if (err) res.status('404').json(err);
-    else{
-      if (result) res.redirect('/users/'+ result.insertId + '/edit');
-      else res.status('500').redirect('/users');
-    }
-  });
-};
-
-/**
-* HTTP POST /api/users/
-* Body Parameters: "username" and "credit" of the user to be created
-* Returns: 200 HTTP code: "Created user :name with id = :id and credit = :credit"
-* Error: 500 HTTP code with result from query
-*/
-exports.apinew = function (req, res){
-  var data = [req.body.name, req.body.credit]; // TODO: security "Careful SQL injection!!!"
-  //console.log(data);
-  var query = cnx.query('INSERT INTO `USERS` (name, credit) VALUES (?,?);', data, function(err, result) {
-    console.log(query.sql);
-    if (err) res.status('404').json(err);
-    else{
-      if (result) res.json('Created user '+data[0]+' with id = '+ result.insertId +' and credit = '+ data[1]);
-      else res.status('500').send("Error: DB returned = " + result);
-    }
-  });
-};
 
 
 exports.edit = function (req, res){
@@ -144,7 +161,8 @@ exports.update = function (req, res){
 };
 
 /**
-* HTTP PUT /api/users/
+* HTTP PUT /api/users/:userId
+* Parameter: id of the user
 * Body Parameter: the JSON user (name, credit, id) to update
 * Returns: 200 HTTP code: User Updated
 * Error: 404 HTTP code 
@@ -173,8 +191,8 @@ exports.delete = function (req, res){
 };
 
 /**
-* HTTP DELETE /api/users/
-* Body Parameter: JSON user ID to delete
+* HTTP DELETE /api/users/:userId
+* Parameters: user ID to delete
 * Returns: 200 HTTP code: User Deleted
 * Error: 404 HTTP code
 */
@@ -188,21 +206,3 @@ exports.apidelete = function (req, res){
       });
   }else res.status('404').send("Wrong parameters!");
 };
-
-/**
-* HTTP Get /users/
-* Body Parameter: JSON user ID to delete
-* Returns: 200 HTTP code: User Deleted
-* Error: 404 HTTP code
-*/
-exports.search = function (req, res){
-  console.log(req.body.name);
-  res.send("hello");
-}
-
-
-
-
-
-
-

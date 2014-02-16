@@ -20,16 +20,22 @@ exports.income = function(req, res){
                        date_format(DATE,'%m') AS MONTH, \
                        date_format(DATE,'%d') AS DAY, \
                        sum(r.cost) AS TOTAL \
-                FROM rentals r \
-                GROUP BY DAY \
-                ORDER BY total DESC";
-  //console.log(q_sql);
+                FROM rentals r ";
+  console.log(req.timing);
+  switch(req.timing){
+    case "d" : q_sql += "GROUP BY DAY ORDER BY total DESC ;"; break;
+    case "m" : q_sql += "GROUP BY MONTH ORDER BY total DESC ;"; break;
+    case "y" : q_sql += "GROUP BY YEAR ORDER BY total DESC ;"; break;
+    default: res.status('404').send("URL does not exist!")
+  }            
+  console.log(q_sql);
   cnx.query(q_sql, function(err, result) {
-    if (err) res.json(err);
-    //console.log("result = " + result)
-    res.render('statistics/income', {title: "Income", incomes: result});
+    if (err) res.status('404').json(err);
+    if (req.path.indexOf("api") !== -1 ) res.json(result);
+    else res.render('statistics/income', {title: "Income", incomes: result});
   });
 }
+
 
 exports.topmovie = function(req, res){
   var q_sql = "SELECT m.id_movie AS ID, m.name AS NAME, sum(r.cost) AS TOTAL \
@@ -38,11 +44,10 @@ exports.topmovie = function(req, res){
                GROUP BY m.name \
                ORDER BY total DESC \
                LIMIT 50;";
-  //console.log(q_sql);
   cnx.query(q_sql, function(err, result) {
-    if (err) res.json(err);
-    //console.log("result = " + result)
-    res.render('statistics/topmovie', {title: "Top Movies", movies: result});
+    if (err) res.status('404').json(err);
+    if (req.path.indexOf("api") !== -1 ) res.json(result);
+    else res.render('statistics/topmovie', {title: "Top Movies", movies: result});
   });
 }
 
@@ -53,11 +58,10 @@ exports.topuser = function(req, res){
                 GROUP BY u.`name`\
                 ORDER BY total DESC \
                 LIMIT 10;";
-  //console.log(q_sql);
   cnx.query(q_sql, function(err, result) {
-    if (err) res.json(err);
-    //console.log("result = " + result)
-    res.render('statistics/topuser', {title: "Top Users", users: result});
+    if (err) res.status('404').json(err);
+    if (req.path.indexOf("api") !== -1 ) res.json(result);
+    else res.render('statistics/topuser', {title: "Top Users", users: result});
   });
 }
 
@@ -68,11 +72,10 @@ exports.topcat = function(req, res){
                 GROUP BY category \
                 ORDER BY total DESC \
                 LIMIT 3;"; 
-  //console.log(q_sql);
   cnx.query(q_sql, function(err, result) {
-    if (err) res.json(err);
-    //console.log("result = " + result)
-    res.render('statistics/topcat', {title: "Top Categories", cats: result});
+    if (err) res.status('404').json(err);
+    if (req.path.indexOf("api") !== -1 ) res.json(result);
+    else res.render('statistics/topcat', {title: "Top Categories", cats: result});
   });
 }
 
@@ -84,9 +87,9 @@ exports.tenplus = function(req, res){
                 HAVING count(*) >= 10;"; 
   //console.log(q_sql);
   cnx.query(q_sql, function(err, result) {
-    if (err) res.json(err);
-    //console.log("result = " + result)
-    res.render('statistics/tenplus', {title: "Movie hired >10 times", tenplus: result});
+    if (err) res.status('404').json(err);
+    if (req.path.indexOf("api") !== -1 ) res.json(result);
+    else res.render('statistics/tenplus', {title: "Movie hired >10 times", tenplus: result});
   });
 }
 
@@ -98,8 +101,8 @@ exports.hiredmovie = function(req, res){
                 ORDER BY HIRED DESC"; 
   //console.log(q_sql);
   cnx.query(q_sql, function(err, result) {
-    if (err) res.json(err);
-    //console.log("result = " + result)
-    res.render('statistics/hiredmovie', {title: "Movie hired", hired: result});
+    if (err) res.status('404').json(err);
+    if (req.path.indexOf("api") !== -1 ) res.json(result);
+    else res.render('statistics/hiredmovie', {title: "Movie hired", hired: result});
   });
 }
