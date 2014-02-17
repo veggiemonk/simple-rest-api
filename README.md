@@ -143,38 +143,6 @@ ALTER TABLE `tablename` AUTO_INCREMENT=1000;
 ```
 
 # SQL query
-
-## For Users
-
- All users:
-```sql
-SELECT * FROM USERS;
-```
-
- Search users by name:
-```sql
-SELECT * FROM USERS WHERE NAME LIKE '%?%' ;
-```
-
- New user:
-```sql
-INSERT INTO USERS (name, credit) VALUES (?,?);
-```
-
- Get a single user:
-```sql
-SELECT * FROM USERS WHERE id_user = ?;
-```
-
- Update a user:
-```sql
-UPDATE USERS SET name = ?, credit = ? WHERE id_user = ?
-```
-
- Delete a user:
-```sql
-DELETE FROM USERS WHERE id_user = ?;
-```
  
 ## For Statistics
 
@@ -236,3 +204,109 @@ WHERE m.id_movie = r.id_movie
 GROUP BY r.id_movie 
 ORDER BY HIRED DESC
 ```
+
+## For Users
+
+ All users:
+```sql
+SELECT * FROM USERS;
+```
+
+ Search users by name:
+```sql
+SELECT * FROM USERS WHERE NAME LIKE '%?%' ;
+```
+
+ New user:
+```sql
+INSERT INTO USERS (name, credit) VALUES (?,?);
+```
+
+ Get a single user:
+```sql
+SELECT * FROM USERS WHERE id_user = ?;
+```
+
+ Update a user:
+```sql
+UPDATE USERS SET name = ?, credit = ? WHERE id_user = ?
+```
+
+ Delete a user:
+```sql
+DELETE FROM USERS WHERE id_user = ?;
+```
+
+## For Movies
+
+ All movies:
+```sql
+SELECT * FROM MOVIES;
+```
+
+ Search movies by name:
+```sql
+SELECT * FROM MOVIES WHERE NAME LIKE '%?%' ;
+```
+
+ New movie:
+```sql
+INSERT INTO MOVIES (name, category, price) VALUES (?,?,?);
+```
+
+ Get a single movie:
+```sql
+SELECT * FROM MOVIES WHERE id_movie = ?;
+```
+
+ Update a movie:
+```sql
+UPDATE MOVIES SET name = ?, category = ?, price = ? WHERE id_movie = ?
+```
+
+ Delete a movie:
+```sql
+DELETE FROM MOVIES WHERE id_movie = ?;
+```
+
+
+## For Rentals
+
+ All rentals:
+```sql
+SELECT m.name AS MOVIE, u.name AS USER, 
+       r.cost, r.date, r.id_user, r.id_movie, r.id 
+FROM RENTALS r, USERS u, MOVIES m 
+WHERE r.id_user = u.id_user 
+AND r.id_movie = m.id_movie
+```
+
+ Search rentals by movie name:
+```sql
+SELECT * FROM RENTALS WHERE NAME LIKE '%?%' ;
+```
+
+ New rental:
+```sql
+INSERT INTO RENTALS (`id_movie`, `id_user`, `cost`, `date`) 
+VALUES ( ?, ?, ?, CURRENT_TIMESTAMP);
+```
+
+ Get a single rental:
+```sql
+SELECT m.name AS MOVIE, u.name AS USER, r.cost, r.date, 
+       r.id_user, r.id_movie, r.id 
+FROM RENTALS r, USERS u, MOVIES m 
+WHERE r.id_user = u.id_user 
+AND r.id_movie = m.id_movie 
+AND r.id = ? ;
+```
+
+ Update cost of a rental:
+```sql
+UPDATE RENTALS SET cost = ? WHERE id = ?;
+```
+
+Since it makes no sens to delete an order from a client, this function was not implemented. Althought it could be easily done, the list of all orders is very valuable information and should not be erased.
+
+
