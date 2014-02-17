@@ -125,3 +125,14 @@ npm start
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/hiredmovie
 
+## Known bug :
+
+Sometimes MySQL doesn't remember the autoincrement number after a restart! It send this error :
+```
+{
+code: "ER_AUTOINC_READ_FAILED",
+errno: 1467,
+sqlState: "HY000",
+index: 0
+}
+```
