@@ -8,12 +8,14 @@ Any comments would be appreciated.
 Basic Authentification with login/pass = root/root
 
 # Quick Start
-```js
+```
 git clone https://github.com/veggiemonk/simple-rest-api.git
 cd simple-rest-api
 npm install
 npm start
 ```
+
+
 # Testing with cURL
 
 ## USERS
@@ -120,6 +122,6 @@ npm start
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/10plus
 
  All Hired Movies :
- 
+
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/hiredmovie
 

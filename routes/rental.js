@@ -143,7 +143,7 @@ exports.edit = function (req, res){
                 AND r.id_movie = m.id_movie \
                 AND r.id= ? ";
   var query = cnx.query(q_sql, [id], function(err, rentals, fields) {
-    console.log(query.sql);
+    //console.log(query.sql);
     if (err) res.status('404').json(err);
     else{
       if (rentals) res.render('rentals/edit', { rental: rentals[0]});
@@ -178,7 +178,7 @@ exports.apiupdate = function (req, res){
     req.body.cost,
     req.params.rentalId
   ];
-  console.log(cost);
+  //console.log(cost);
   var query = cnx.query('UPDATE `RENTALS` SET cost = ? WHERE id = ?', cost, 
     function(err, result) {
       if (err) res.status('404').json(err); 
