@@ -127,7 +127,7 @@ npm start
 
 ## Known bug :
 
-Sometimes MySQL doesn't remember the autoincrement number after a restart! It send this error :
+Sometimes MySQL cannot read the autoincrement number after a restart! It send this error :
 ```
 {
 code: "ER_AUTOINC_READ_FAILED",
@@ -135,4 +135,9 @@ errno: 1467,
 sqlState: "HY000",
 index: 0
 }
+```
+
+To solve this, the autoincrement number has to be reset by :
+```sql
+ALTER TABLE tablename AUTO_INCREMENT=1000;
 ```
