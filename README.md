@@ -139,5 +139,100 @@ index: 0
 
 To solve this, the autoincrement number has to be reset by :
 ```sql
-ALTER TABLE tablename AUTO_INCREMENT=1000;
+ALTER TABLE `tablename` AUTO_INCREMENT=1000;
+```
+
+# SQL query
+
+## For Users
+
+ All users:
+```sql
+SELECT * FROM USERS;
+```
+
+ Search users by name:
+```sql
+SELECT * FROM USERS WHERE NAME LIKE '%?%' ;
+```
+
+ New user:
+```sql
+INSERT INTO USERS (name, credit) VALUES (?,?);
+```
+
+ Get a single user:
+```sql
+SELECT * FROM USERS WHERE id_user = ?;
+```
+
+ Update a user:
+```sql
+UPDATE USERS SET name = ?, credit = ? WHERE id_user = ?
+```
+
+ Delete a user:
+```sql
+DELETE FROM USERS WHERE id_user = ?;
+```
+ 
+## For Statistics
+
+ Income of the day:
+```sql
+SELECT date_format(DATE,'%Y') AS YEAR, 
+       date_format(DATE,'%m') AS MONTH, 
+       date_format(DATE,'%d') AS DAY,
+       sum(r.cost) AS TOTAL 
+FROM rentals r
+GROUP BY YEAR, MONTH, DAY 
+ORDER BY total DESC;
+```
+ 
+ Top 50 Movies:
+```sql
+SELECT m.id_movie AS ID, m.name AS NAME, sum(r.cost) AS TOTAL 
+FROM MOVIES m, rentals r 
+WHERE m.id_movie = r.id_movie
+GROUP BY m.name 
+ORDER BY total DESC 
+LIMIT 50;
+```
+
+ Top 10 Users:
+```sql
+SELECT u.name AS NAME, u.id_user as ID, sum(r.cost) AS TOTAL 
+FROM users u, rentals r 
+WHERE u.id_user = r.id_user 
+GROUP BY u.name
+ORDER BY total DESC
+LIMIT 10;
+```
+
+ Top 3 categories:
+```sql
+SELECT m.category AS CAT, sum(r.cost) AS TOTAL 
+FROM movies m, rentals r 
+WHERE m.id_movie = r.id_movie 
+GROUP BY category 
+ORDER BY total DESC 
+LIMIT 3;
+```
+
+ Movies hired more than 10 times:
+```sql
+SELECT m.name as NAME, m.id_movie AS ID, count(*) AS HIRED 
+FROM movies m, rentals r 
+WHERE m.id_movie = r.id_movie 
+GROUP BY r.id_movie
+HAVING count(*) >= 10;
+```
+
+ All hired movies:
+```sql
+SELECT m.name as NAME, m.id_movie AS ID, count(*) AS HIRED 
+FROM movies m, rentals r 
+WHERE m.id_movie = r.id_movie 
+GROUP BY r.id_movie 
+ORDER BY HIRED DESC
 ```
