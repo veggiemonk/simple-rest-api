@@ -120,5 +120,6 @@ npm start
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/10plus
 
  All Hired Movies :
+ 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/hiredmovie
 
