@@ -218,7 +218,7 @@ GROUP BY category
 ORDER BY total DESC 
 LIMIT 3;
 ```
-
+ 
  Movies hired more than 10 times:
 ```sql
 SELECT m.name as NAME, m.id_movie AS ID, count(*) AS HIRED 
