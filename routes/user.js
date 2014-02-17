@@ -183,7 +183,7 @@ exports.apiupdate = function (req, res){
 
 exports.delete = function (req, res){
   var id = req.params.userId;
-  var query = cnx.query('DELETE FROM `USERS` WHERE `users`.`id_user` = ?', id,
+  var query = cnx.query('DELETE FROM `USERS` WHERE `users`.`id_user` = ? ;', id,
     function(err, result) {
       if (err){ res.status('404').json(err); new Error(err);}
     });
