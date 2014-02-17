@@ -18,27 +18,27 @@ npm start
 
 ## USERS
 
-### Get list of all users
+ Get list of all users
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/users/
 
-### Search users by name
+ Search users by name
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/search/users/ -d '{"name":"vincent"}'
 
-### To get a single user with id = 1
+ To get a single user with id = 1
   
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/users/1
 
-### To create new users with name = USERNAME 1 and credit = 20
+ To create new users with name = USERNAME 1 and credit = 20
 
     $ curl -i -X POST -d '{"name":"USERNAME 1", "credit":"20"}' -H "Content-Type: application/json" --user root:root http://localhost:3000/api/users/
 
-### To update user with id = 1
+ To update user with id = 1
 
     $ curl -i -X PUT --data '{"name":"vincent","credit":"20"}' -H "Content-Type: application/json" --user root:root http://localhost:3000/api/users/1
 
-### To delete a user with id = 1009
+ To delete a user with id = 1009
 
     $ curl -i -X DELETE -H "Content-Type: application/json" --user root:root http://localhost:3000/api/users/1009
 
@@ -84,36 +84,41 @@ npm start
 
     $ curl -i -X PUT --data '{"cost":"50"}' -H "Content-Type: application/json" --user root:root http://localhost:3000/api/rentals/30
 
+ Retrieve a rental by id = 30
+    
+    $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/rentals/30
+
+
 ## STATISTICS
 
-### Income of the Day
+ Income of the Day :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/income/d
 
-### Income of the Month
+ Income of the Month :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/income/m
 
-### Income of the Year
+ Income of the Year :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/income/y
 
-### Top 50 movies
+ Top 50 movies :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/topmovie
 
-### Top 10 users
+ Top 10 users :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/topuser
 
-### Top 3 categories
+ Top 3 categories :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/topcat
 
-### Movies Hired more than 10 times
+ Movies Hired more than 10 times :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/10plus
 
-### All Hired Movies
+ All Hired Movies :
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/stats/hiredmovie
 
