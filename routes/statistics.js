@@ -9,26 +9,36 @@ var cnx = mysql.createConnection({
   database : db.database
 });
 
-cnx.connect();
+try{
+  cnx.connect();
+}catch(e){
+  console.log(e);
+}
+
 
 exports.list = function(req, res){
   res.render('statistics/stats', { title: 'Statistics' });
 };
 
 exports.income = function(req, res){
-  var q_sql = "SELECT date_format(DATE,'%Y') AS YEAR, \
-                       date_format(DATE,'%m') AS MONTH, \
-                       date_format(DATE,'%d') AS DAY, \
-                       sum(r.cost) AS TOTAL \
-                FROM rentals r ";
-  console.log(req.timing);
+  var q_sql = "";
   switch(req.timing){
-    case "d" : q_sql += "GROUP BY DAY ORDER BY total DESC ;"; break;
-    case "m" : q_sql += "GROUP BY MONTH ORDER BY total DESC ;"; break;
+    case "y" : q_sql += "SELECT date_format(DATE,'%Y') AS YEAR,"; break;
+    case "m" : q_sql += "SELECT date_format(DATE,'%Y') AS YEAR, \
+                                date_format(DATE,'%m') AS MONTH,"; break;
+    case "d" : q_sql += "SELECT date_format(DATE,'%Y') AS YEAR, \
+                                date_format(DATE,'%m') AS MONTH, \
+                                date_format(DATE,'%d') AS DAY,"; break;
+    default: res.status('404').send("URL does not exist!")
+  }  
+  q_sql +="sum(r.cost) AS TOTAL FROM rentals r ";
+  switch(req.timing){
+    case "d" : q_sql += "GROUP BY YEAR, MONTH, DAY ORDER BY total DESC ;"; break;
+    case "m" : q_sql += "GROUP BY YEAR, MONTH ORDER BY total DESC ;"; break;
     case "y" : q_sql += "GROUP BY YEAR ORDER BY total DESC ;"; break;
     default: res.status('404').send("URL does not exist!")
   }            
-  console.log(q_sql);
+  //console.log(q_sql);
   cnx.query(q_sql, function(err, result) {
     if (err) res.status('404').json(err);
     if (req.path.indexOf("api") !== -1 ) res.json(result);

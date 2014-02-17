@@ -2,7 +2,7 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='../stylesheets/style.css')
+    link(rel='stylesheet', href='../../stylesheets/style.css')
   body
     h1 #{title}
     hr 
@@ -17,16 +17,16 @@ html
     table.table.table-striped.table-bordered.table-hover.table-condensed.table-responsive 
       thead
         tr 
-          th YEAR
-          th MONTH
-          th DAY
+          th: a(href="/stats/income/y") YEAR
+          th: a(href="/stats/income/m") MONTH
+          th: a(href="/stats/income/d") DAY
           th TOTAL
       tbody
         each income, i in incomes
-          tr(class=(i % 2 == 0) ? 'odd' : 'even')
-            td: a(href="/stats/income/y#{income.YEAR}") #{income.YEAR}
-            td: a(href="/stats/income/m#{income.MONTH}") #{income.MONTH}
-            td: a(href="/stats/income/d#{income.DAY}") #{income.DAY}
+          tr
+            td: a(href="/stats/income/y") #{income.YEAR}
+            td: a(href="/stats/income/m") #{income.MONTH}
+            td: a(href="/stats/income/d") #{income.DAY}
             td #{income.TOTAL}
         
       

@@ -45,40 +45,44 @@ npm start
 
 ## MOVIES
 
-### Get list of all movies
+ Get list of all movies :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/
 
-### Search movies by name
+ Search movies by name :
 
     $ curl -i -X POST -H "Content-Type: application/json" --user root:root http://localhost:3000/api/search/movies/ -d '{"name":"movie"}'
 
-### To get a single movie with id = 1
+ To get a single movie with id = 1 :
   
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/1
 
-### To create new movie with name = "MOVIE 1", category = "5" and price = "20"
+ To create new movie with name = "MOVIE 1", category = "5" and price = "20" :
 
     $ curl -i -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/ --data '{"name":"Movie 1", "category":"5", "price":"20"}'
 
-### To update movie with id = 1
+ To update movie with id = 1 :
 
     $ curl -i -X PUT --data '{"name":"BRAKUS2", "category":"4", "price":"20"}' -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/1
 
-### To delete a movie with id = 1009
+ To delete a movie with id = 1009 :
 
     $ curl -i -X DELETE -H "Content-Type: application/json" --user root:root http://localhost:3000/api/movies/1009
 
 
 ## RENTALS
 
-### Get list of all rentals
+ Get list of all rentals :
 
     $ curl -H "Content-Type: application/json" --user root:root http://localhost:3000/api/rentals
 
+ Rent a movie by a user :
 
+    $ curl -i -H "Content-Type: application/json" --user root:root http://localhost:3000/api/rentals/ --data '{"id_movie":"1", "id_user":"5", "cost":"25"}'
 
+ Edit a rental (id=30) and set cost = 50 :
 
+    $ curl -i -X PUT --data '{"cost":"50"}' -H "Content-Type: application/json" --user root:root http://localhost:3000/api/rentals/30
 
 ## STATISTICS
 

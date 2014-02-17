@@ -155,18 +155,20 @@ app.param('rentalId', function(req, res, next){
 });
 //List of rentals
 app.get('/rentals',auth, rental.list);
-app.get('/api/rentals',auth, rental.list);
+app.get('/api/rentals',auth, rental.list); //json
 //Hire a movie
 app.get('/rentals/new',auth, rental.add);
 //Add new hire to db
 app.post('/rentals',auth, rental.new);
-app.post('/api/rentals',auth, rental.new);
-//Show single rental --> no need at the moment!
+app.post('/api/rentals',auth, rental.apinew); //json
+//Show single rental 
 app.get('/rentals/:rentalId',auth, rental.getrental);
-//Edit rental info --> no need at the moment!
+app.get('/api/rentals/:rentalId',auth, rental.apigetrental); //json
+//Edit rental info 
 app.get('/rentals/:rentalId/edit',auth, rental.edit);
 //Update rental changes to db 
 app.put('/rentals/:rentalId',auth, rental.update);
+app.put('/api/rentals/:rentalId',auth, rental.apiupdate); //json
 //Delete rental --> No need!!
 //app.delete('/rentals/:rentalId', rental.delete);
 
@@ -189,7 +191,7 @@ app.param('timing', function(req, res, next){
 });
 //List of statistics
 app.get('/stats',auth, stats.list);
-app.get('/stats/income',auth, stats.income);
+app.get('/stats/income/:timing',auth, stats.income);
 app.get('/stats/topmovie',auth, stats.topmovie);
 app.get('/stats/topuser',auth, stats.topuser);
 app.get('/stats/topcat',auth, stats.topcat);
