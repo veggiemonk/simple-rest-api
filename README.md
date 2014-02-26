@@ -1,5 +1,6 @@
 simple-rest-api
 ===============
+[![Coverage Status](https://coveralls.io/repos/veggiemonk/simple-rest-api/badge.png)](https://coveralls.io/r/veggiemonk/simple-rest-api)
 
 This is a simple REST API built with Node.js, MySQL and Express.
 
